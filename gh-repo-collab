@@ -14,7 +14,7 @@ list() {
   local repo='{owner}/{repo}'
   [ $# -eq 0 ] || repo="$1"
   # list individual collaborators
-  gh api --paginate "repos/$repo/collaborators?affiliation=direct" --template '
+  gh api "repos/$repo/collaborators?affiliation=direct" --template '
     {{- range . -}}
     {{- $perm := "" -}}
     {{- if .permissions.admin -}}
@@ -31,7 +31,7 @@ list() {
     {{- tablerow .login $perm -}}
     {{- end -}}'
   # list team collaborators for organization repositories
-  gh api --paginate "repos/$repo/teams" --template '
+  gh api "repos/$repo/teams" --template '
     {{- range . -}}
     {{- $perm := "" -}}
     {{- if .permissions.admin -}}
